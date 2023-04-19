@@ -29,6 +29,17 @@ window.addEventListener("load", function() {
     // TODO: If the random advice button is clicked, put the advice in the result section
     // The endpoint is https://api.adviceslip.com/advice
 
+    if (event.target.id === "advice") {
+      fetch('https://api.adviceslip.com/advice')
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // to see full JSON object
+          result.innerHTML = `
+              <p>&quot;${data.slip.advice}&quot;</p> 
+          `;
+      });
+    }
+
     // RANDOM ADVICE courtesy of https://api.adviceslip.com/
 
 
@@ -46,6 +57,24 @@ window.addEventListener("load", function() {
 
     // RANDOM DAD JOKE courtesy of https://icanhazdadjoke.com/api
 
+    if (event.target.id === "dad-joke") {
+      getDadJoke();
+    }
+
+    async function getDadJoke() {
+      let response = await fetch('https://icanhazdadjoke.com', {
+         headers: {
+             Accept: "application/json",
+         }
+       });
+ 
+       let data = await response.json();
+ 
+       console.log(data); // to see full JSON object
+       
+       result.innerHTML = `
+           <p>&quot;${data.joke}&quot;</p> `;
+     }
 
   });
 });
